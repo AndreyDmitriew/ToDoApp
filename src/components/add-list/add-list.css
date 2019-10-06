@@ -1,0 +1,13 @@
+.add-list-form {
+    display: inline-flex;
+    padding-top: 30px;
+}
+
+
+.add-list-form-btn {
+    height: 47px;
+}
+
+.add-list-form input {
+    margin-right: 3px;
+}

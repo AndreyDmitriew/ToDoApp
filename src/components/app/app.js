@@ -17,7 +17,8 @@ export default class App extends Component {
             this.createTodoItem('Drink coffee'),
             this.createTodoItem('Make Awesome App'),
             this.createTodoItem('Have a lunch')
-        ]
+        ],
+        term: ''
     };
 
     createTodoItem(label) {
@@ -44,9 +45,7 @@ export default class App extends Component {
         });
     };
 
-
     addItem = (text) => {
-
         const newItem = this.createTodoItem(text);
         this.setState( ({ todoData }) => {
             const newArray = [...todoData, newItem]
@@ -55,7 +54,6 @@ export default class App extends Component {
             };
         });
     };
-
 
     toggleProperty(arr, id, propName) {
         const idx = arr.findIndex( (el) => el.id === id );
@@ -88,18 +86,34 @@ export default class App extends Component {
         });
     };
 
+    onSearchChange = (term) => {
+        this.setState({ term })
+    };
+
+    search (items, term) {
+        if (term.length === 0) {
+            return items;
+        };
+
+        return items.filter((item) => {
+            return item.label.toLowerCase().indexOf(term.toLowerCase()) > -1
+        });
+    };
+
+
     render() {
-        const { todoData } = this.state; // this.state повторяется что бы не писать его в коде много раз, присваваем его в переменную или динамич переменную (уточнить)
+        const { todoData, term } = this.state; // this.state повторяется что бы не писать его в коде много раз, присваваем его в переменную или динамич переменную (уточнить)
+        const visibleItems = this.search(todoData, term);
         const doneCount = todoData.filter((el) => el.done).length; // отфильтровали массив и state , создали новый массив, в новом массиве мы сохранили только те значения у которых есть done которое true и затем мы посчитали длину этого массива
         const unDoneCount = todoData.filter((el) => el).length - doneCount;
 
         return (
             <div className='main'>
                 <AppHeader toDo={ unDoneCount } done={ doneCount } />
-                <SearchPanel />
+                <SearchPanel onSearchChange = {this.onSearchChange} />
                 <ItemStatusFilter />
                 <TodoList 
-                    todos={ todoData }
+                    todos={ visibleItems }
                     onDeleted={ this.deleteItem } 
                     onToggleImportant = {this.onToggleImportant}
                     onToggleDone = {this.onToggleDone}

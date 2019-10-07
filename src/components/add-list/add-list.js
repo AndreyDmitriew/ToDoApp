@@ -17,7 +17,10 @@ export default class AddList extends Component {
   onSubmit = (e) => {
     e.preventDefault(); // т.к. формы для заполнения данных по умолчанию после отправки перезагружают страницу, нам это не нужно и с помощью метода preventDefault мы отменяем это ее стандартное действие
     this.props.onItemAdded(this.state.label);
-  }
+    this.setState({
+      label: ''
+    });
+  };
 
     render() {
       return (
@@ -26,7 +29,8 @@ export default class AddList extends Component {
           <input type="text" 
                  className='form-control'
                  onChange={ this.onLabelChange }
-                 placeholder='What needs to be done' />
+                 placeholder='What needs to be done' 
+                 value={this.state.label} />
           <button 
             className="add-list-form-btn"
             // onClick={ () => this.props.onItemAdded('Hello world!') }

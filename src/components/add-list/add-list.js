@@ -32,7 +32,7 @@ export default class AddList extends Component {
                  placeholder='What needs to be done' 
                  value={this.state.label} />
           <button 
-            className="add-list-form-btn"
+            className="add-list-form-btn btn btn-info"
             // onClick={ () => this.props.onItemAdded('Hello world!') }
             >
             Add Item
